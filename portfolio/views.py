@@ -28,4 +28,9 @@ def profile_view(req):
         form = ProfileForm()
 
     profiles = Profile.objects.all()
-    return render(req, "upload.html", {"form": form, "profiles": profiles})      
+    return render(req, "upload.html", {"form": form, "profiles": profiles})
+
+def customer_list(req):
+    rich_customers = Customer.objects.filter(balance__gt=500)
+    return render(req, "customer.html", {"customers": rich_customers})      
+
