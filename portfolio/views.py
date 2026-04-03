@@ -1,7 +1,8 @@
-from django.shortcuts import render
-from .forms import FeedbackForm
+from django.shortcuts import render, redirect
+from .forms import FeedbackForm, ProfileForm
+from .models import Profile
 
-# Create your views here.
+#Create your views here.
 def home(req):
     return render(req, 'home.html')
 
@@ -15,5 +16,16 @@ def feedback_view(req):
             return render(req, "success.html", {"name": form.cleaned_data ["name"]})
     else:
         form= FeedbackForm()
+        return render(req, "feedback.html", {"form":form})
 
-    return render(req, "feedback.html", {"form":form})
+def profile_view(req):
+    if req.method == "POST":
+        form = ProfileForm(req.POST, req.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("profile_view")
+    else:
+        form = ProfileForm()
+
+    profiles = Profile.objects.all()
+    return render(req, "upload.html", {"form": form, "profiles": profiles})      

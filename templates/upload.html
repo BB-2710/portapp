@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="Submit">Upload</button>
+    </form>
+    <hr>
+    <h2>Profile Display</h2>
+
+    {% for profile in profiles %}
+
+    <p>{{ profile.name }}</p>
+
+    {% if profile.profilepic %}
+
+    <img srs="{{ profile.profile_pic.url }}"
+    class="profile-img">
+
+    {% endif %}
+
+    {% endfor %}
+</body>
+</html>
